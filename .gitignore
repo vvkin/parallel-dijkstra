@@ -1,0 +1,37 @@
+# prerequisites
+*.d
+
+# compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# precompiled headers
+*.gch
+*.pch
+
+# compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# compiled static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# executables
+*.exe
+*.out
+*.app
+
+# build
+build
+
+# vscode config
+.vscode
+
+# misc
+data
