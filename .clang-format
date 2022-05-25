@@ -1,0 +1,12 @@
+---
+Language: Cpp
+ColumnLimit: 100
+IndentWidth: 4
+SortIncludes: Never
+ContinuationIndentWidth: 8
+DeriveLineEnding: true
+AlignTrailingComments: true
+MaxEmptyLinesToKeep: 1
+UseCRLF: false
+UseTab: Never
+Standard: Auto
