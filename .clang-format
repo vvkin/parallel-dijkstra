@@ -10,3 +10,5 @@ MaxEmptyLinesToKeep: 1
 UseCRLF: false
 UseTab: Never
 Standard: Auto
+AllowShortFunctionsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
