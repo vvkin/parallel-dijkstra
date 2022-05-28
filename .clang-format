@@ -12,3 +12,4 @@ UseTab: Never
 Standard: Auto
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: true
+AlwaysBreakTemplateDeclarations: true

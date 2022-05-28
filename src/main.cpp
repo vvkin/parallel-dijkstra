@@ -2,9 +2,18 @@
 #include <string>
 
 #include "dijkstra/factory.hpp"
+#include "dijkstra/serial.hpp"
+
+template <typename T>
+void print_vector(std::vector<T> vec) {
+    for (auto el : vec) {
+        std::cout << el << " ";
+    }
+};
 
 int main() {
-    std::string path = "../../data/graph.txt";
+    std::string path = "data/graph.txt";
     auto graph = GraphFactory::from_file(path);
-    std::cout << "Done!";
+    auto distance = serial_dijkstra(graph, 0);
+    print_vector(distance);
 }

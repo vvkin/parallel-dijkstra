@@ -24,7 +24,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(SOURCES
     src/main.cpp
     src/graph.cpp
-    src/factory.cpp)
+    src/factory.cpp
+    src/serial.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # include headers
