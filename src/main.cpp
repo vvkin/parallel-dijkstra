@@ -1,5 +1,10 @@
 #include <iostream>
+#include <string>
 
-using namespace std;
+#include "dijkstra/factory.hpp"
 
-int main() { cout << "Hello, world! "; }
+int main() {
+    std::string path = "../../data/graph.txt";
+    auto graph = GraphFactory::from_file(path);
+    std::cout << "Done!";
+}

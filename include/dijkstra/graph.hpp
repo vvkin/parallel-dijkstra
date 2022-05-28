@@ -6,7 +6,7 @@
 
 struct Edge {
     int to;
-    float cost;
+    double cost;
 };
 
 class Graph {
@@ -14,7 +14,7 @@ class Graph {
     Graph(int v_number);
     Graph(Graph &that);
 
-    void add_edge(int from, int to, float cost);
+    void add_edge(int from, int to, double cost);
 
     std::vector<std::list<Edge>> as_adj_list();
 

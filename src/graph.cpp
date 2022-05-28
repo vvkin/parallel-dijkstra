@@ -2,7 +2,7 @@
 
 Graph::Graph(int v_number) {
     this->v_number = v_number;
-    this->adj_list = std::vector<std::list<Edge>>(v_number);
+    this->adj_list = std::vector<std::list<Edge>>(this->v_number);
 }
 
 Graph::Graph(Graph &that) {
@@ -10,7 +10,7 @@ Graph::Graph(Graph &that) {
     this->adj_list = std::vector<std::list<Edge>>(this->v_number);
 }
 
-void Graph::add_edge(int from, int to, float cost) {
+void Graph::add_edge(int from, int to, double cost) {
     Edge edge = {to, cost};
     this->adj_list[from].push_back(edge);
 }
