@@ -2,4 +2,4 @@
 
 #include "graph.hpp"
 
-std::vector<double> serial_dijkstra(const Graph &graph, int src);
+std::vector<float> serial_dijkstra(const Graph &graph, int src);

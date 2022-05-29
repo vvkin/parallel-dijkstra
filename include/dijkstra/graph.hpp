@@ -6,7 +6,7 @@
 
 struct Edge {
     int to;
-    double cost;
+    float cost;
 };
 
 class Graph {
@@ -17,7 +17,7 @@ class Graph {
 
     Graph(Graph &that) noexcept;
 
-    void add_edge(int from, int to, double cost);
+    void add_edge(int from, int to, float cost);
 
     const std::vector<std::list<Edge>> &as_adj_list() const noexcept;
 

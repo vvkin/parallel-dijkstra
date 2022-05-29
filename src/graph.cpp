@@ -10,9 +10,9 @@ Graph::Graph(Graph &that) noexcept
     : v_number(that.v_number), adj_list(std::vector<std::list<Edge>>(v_number)) {
 }
 
-void Graph::add_edge(int from, int to, double cost) {
+void Graph::add_edge(int from, int to, float cost) {
     Edge edge = {to, cost};
-    this->adj_list[from].push_back(std::move(edge));
+    adj_list[from].push_back(std::move(edge));
 }
 
 const std::vector<std::list<Edge>> &Graph::as_adj_list() const noexcept {
@@ -31,7 +31,7 @@ void Graph::set_v_number(int v_number) {
 
 std::istream &operator>>(std::istream &stream, Graph &graph) {
     int v_number, e_number, from, to;
-    double cost;
+    float cost;
 
     stream >> v_number >> e_number;
     graph.set_v_number(v_number);
