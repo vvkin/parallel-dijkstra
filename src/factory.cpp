@@ -7,6 +7,7 @@
 #include <boost/random/linear_congruential.hpp>
 
 #include "dijkstra/factory.hpp"
+#include "dijkstra/const.hpp"
 
 using BoostGraph = boost::adjacency_list<>;
 using ERGen = boost::erdos_renyi_iterator<boost::minstd_rand, BoostGraph>;
@@ -29,7 +30,7 @@ Graph GraphFactory::from_file(const std::string &path) {
 
 Graph map_boost_graph(const BoostGraph &boost_graph);
 
-Graph GraphFactory::from_random(int v_number, double density) {
+Graph GraphFactory::from_random(int v_number, float density) {
     boost::minstd_rand engine(std::random_device{}());
     BoostGraph boost_graph(ERGen(engine, v_number, density), ERGen(), v_number);
     return map_boost_graph(boost_graph);

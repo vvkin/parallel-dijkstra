@@ -2,7 +2,8 @@
 
 #include <list>
 #include <vector>
-#include <fstream>
+#include <ostream>
+#include <istream>
 
 struct Edge {
     int to;
@@ -36,3 +37,5 @@ class Graph {
 };
 
 std::istream &operator>>(std::istream &stream, Graph &graph);
+
+std::ostream &operator<<(std::ostream &stream, Graph &graph);

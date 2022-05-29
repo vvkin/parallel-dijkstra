@@ -25,7 +25,8 @@ set(SOURCES
     src/main.cpp
     src/graph.cpp
     src/factory.cpp
-    src/serial.cpp)
+    src/serial.cpp
+    src/writer.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 # include headers

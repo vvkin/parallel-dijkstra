@@ -3,6 +3,7 @@
 #include <limits>
 
 #include "dijkstra/serial.hpp"
+#include "dijkstra/const.hpp"
 
 using namespace std;
 
