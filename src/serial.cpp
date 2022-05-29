@@ -6,8 +6,6 @@
 
 using namespace std;
 
-const float INF = std::numeric_limits<float>::max();
-
 struct DijkstraCompare {
     bool operator()(const pair<int, float> &a, const pair<int, float> &b) const {
         return a.second > b.second;
@@ -18,7 +16,7 @@ vector<float> serial_dijkstra(const Graph &graph, int source) {
     auto v_number = graph.get_v_number();
     auto &adj_list = graph.as_adj_list();
 
-    auto distance = vector<float>(v_number, INF);
+    auto distance = vector<float>(v_number, DIJKSTRA_INF);
     auto visited = vector<bool>(v_number, false);
 
     priority_queue<pair<int, float>, vector<pair<int, float>>, DijkstraCompare> queue;

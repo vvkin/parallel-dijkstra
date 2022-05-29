@@ -13,7 +13,7 @@ class Graph {
   public:
     Graph() noexcept;
 
-    Graph(int v_number) noexcept;
+    Graph(int v_number, int e_number) noexcept;
 
     Graph(Graph &that) noexcept;
 
@@ -25,8 +25,13 @@ class Graph {
 
     void set_v_number(int v_number);
 
+    int get_e_number() const noexcept;
+
+    void set_e_number(int e_number);
+
   private:
     int v_number;
+    int e_number;
     std::vector<std::list<Edge>> adj_list;
 };
 

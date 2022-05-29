@@ -31,3 +31,10 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 # include headers
 set(INCLUDES include src)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
+
+# external packages
+find_package(Boost 1.78 REQUIRED COMPONENTS graph)
+
+# link external libraries
+set(Boost::graph)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBRARIES})
