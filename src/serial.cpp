@@ -26,7 +26,7 @@ vector<double> serial_dijkstra(const Graph &graph, int source) {
 
         if (distance[currIdx] < currDist) continue;
 
-        for (auto edge : adj_list[currIdx]) {
+        for (auto &edge : adj_list[currIdx]) {
             if (visited[edge.to]) continue;
 
             float nextDist = distance[currIdx] + edge.cost;

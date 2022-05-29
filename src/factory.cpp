@@ -3,7 +3,7 @@
 
 #include "dijkstra/factory.hpp"
 
-std::ifstream GraphFactory::get_ifstream_throwable(std::string path) {
+std::ifstream get_ifstream_throwable(const std::string path) {
     std::ifstream in_stream{path};
     if (!in_stream) {
         auto reason = "File " + path + " does not exist";
@@ -12,17 +12,23 @@ std::ifstream GraphFactory::get_ifstream_throwable(std::string path) {
     return in_stream;
 }
 
-Graph GraphFactory::from_file(std::string path) {
-    auto stream = GraphFactory::get_ifstream_throwable(path);
-    int v_number, e_number, from, to;
+std::istream &operator>>(std::istream &stream, Graph &graph) {
+    int from, to;
     double cost;
+    stream >> from >> to >> cost;
+    graph.add_edge(from, to, cost);
+    return stream;
+}
+
+Graph GraphFactory::from_file(const std::string path) {
+    auto stream = get_ifstream_throwable(path);
+    int v_number, e_number;
 
     stream >> v_number >> e_number;
     Graph graph(v_number);
 
     for (int idx = 0; idx < e_number; ++idx) {
-        stream >> from >> to >> cost;
-        graph.add_edge(from, to, cost);
+        stream >> graph;
     }
 
     return graph;

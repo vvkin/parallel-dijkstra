@@ -9,7 +9,7 @@ void print_vector(std::vector<T> vec) {
     for (auto el : vec) {
         std::cout << el << " ";
     }
-};
+}
 
 int main() {
     std::string path = "data/graph.txt";

@@ -2,11 +2,16 @@
 
 #include <list>
 #include <vector>
-#include <string>
 
 struct Edge {
     int to;
     double cost;
+
+    Edge(const Edge &that) noexcept = default;
+
+    Edge(Edge &&that) noexcept = default;
+
+    Edge() noexcept = default;
 };
 
 class Graph {
@@ -16,9 +21,9 @@ class Graph {
 
     void add_edge(int from, int to, double cost);
 
-    std::vector<std::list<Edge>> as_adj_list() const;
+    const std::vector<std::list<Edge>> &as_adj_list() const noexcept;
 
-    int get_vertices_number() const;
+    int get_vertices_number() const noexcept;
 
   private:
     int v_number;
