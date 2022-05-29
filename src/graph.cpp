@@ -1,11 +1,13 @@
 #include "dijkstra/graph.hpp"
 
+Graph::Graph() noexcept : v_number(0){};
+
 Graph::Graph(int v_number) noexcept
-    : v_number(v_number), adj_list(std::vector<std::list<Edge>>(this->v_number)) {
+    : v_number(v_number), adj_list(std::vector<std::list<Edge>>(v_number)) {
 }
 
 Graph::Graph(Graph &that) noexcept
-    : v_number(that.v_number), adj_list(std::vector<std::list<Edge>>(this->v_number)) {
+    : v_number(that.v_number), adj_list(std::vector<std::list<Edge>>(v_number)) {
 }
 
 void Graph::add_edge(int from, int to, double cost) {
@@ -14,9 +16,30 @@ void Graph::add_edge(int from, int to, double cost) {
 }
 
 const std::vector<std::list<Edge>> &Graph::as_adj_list() const noexcept {
-    return this->adj_list;
+    return adj_list;
 }
 
-int Graph::get_vertices_number() const noexcept {
-    return this->v_number;
+int Graph::get_v_number() const noexcept {
+    return v_number;
+}
+
+void Graph::set_v_number(int v_number) {
+    Graph::v_number = v_number;
+    adj_list.clear();
+    adj_list.resize(v_number);
+}
+
+std::istream &operator>>(std::istream &stream, Graph &graph) {
+    int v_number, e_number, from, to;
+    double cost;
+
+    stream >> v_number >> e_number;
+    graph.set_v_number(v_number);
+
+    for (int idx = 0; idx < e_number; ++idx) {
+        stream >> from >> to >> cost;
+        graph.add_edge(from, to, cost);
+    }
+
+    return stream;
 }
