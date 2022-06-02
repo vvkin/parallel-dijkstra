@@ -43,9 +43,9 @@ Graph map_boost_graph(const BoostGraph &boost_graph) {
 
     std::mt19937 engine(std::random_device{}());
     auto weight_gen = bind(std::uniform_real_distribution<float>(0, DIJSTRA_MAX_VALUE), engine);
-    auto edges = boost::make_iterator_range(boost::edges(boost_graph));
+    const auto edges = boost::make_iterator_range(boost::edges(boost_graph));
 
-    for (auto edge : edges) {
+    for (const auto &edge : edges) {
         auto cost = weight_gen();
         graph.add_edge(edge.m_source, edge.m_target, cost);
     }

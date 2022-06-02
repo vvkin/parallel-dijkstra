@@ -11,8 +11,7 @@ std::ofstream get_ofstream_throwable(const std::string &path) {
     return out_stream;
 }
 
-void GraphWriter::to_file(Graph &graph, const std::string &path) {
+void GraphWriter::to_file(const Graph &graph, const std::string &path) {
     auto stream = get_ofstream_throwable(path);
     stream << graph;
-    stream.close();
 }

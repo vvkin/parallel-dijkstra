@@ -6,7 +6,7 @@
 
 class GraphWriter {
   public:
-    static void to_file(Graph &graph, const std::string &path);
+    static void to_file(const Graph &graph, const std::string &path);
 
   private:
     GraphWriter();

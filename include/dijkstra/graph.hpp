@@ -38,4 +38,4 @@ class Graph {
 
 std::istream &operator>>(std::istream &stream, Graph &graph);
 
-std::ostream &operator<<(std::ostream &stream, Graph &graph);
+std::ostream &operator<<(std::ostream &stream, const Graph &graph);

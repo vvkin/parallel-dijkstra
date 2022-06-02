@@ -55,15 +55,14 @@ std::istream &operator>>(std::istream &stream, Graph &graph) {
     return stream;
 }
 
-std::ostream &operator<<(std::ostream &stream, Graph &graph) {
+std::ostream &operator<<(std::ostream &stream, const Graph &graph) {
     auto v_number = graph.get_v_number();
     auto e_number = graph.get_e_number();
     auto &adj_list = graph.as_adj_list();
     stream << v_number << ' ' << e_number << '\n';
 
     for (int v_idx = 0; v_idx < v_number; ++v_idx) {
-        auto adj_edges = adj_list[v_idx];
-        for (auto edge : adj_edges) {
+        for (auto &edge : adj_list[v_idx]) {
             stream << v_idx << ' ' << edge.to << ' ' << edge.cost;
             stream << '\n';
         }
