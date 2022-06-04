@@ -4,12 +4,12 @@
 Graph::Graph() noexcept : v_number(0), e_number(0){};
 
 Graph::Graph(int v_number, int e_number) noexcept
-    : v_number(v_number), e_number(e_number), adj_list(std::vector<std::list<Edge>>(v_number)) {
+    : v_number(v_number), e_number(e_number), adj_list(std::vector<std::vector<Edge>>(v_number)) {
 }
 
 Graph::Graph(Graph &that) noexcept
     : v_number(that.v_number), e_number(that.e_number),
-      adj_list(std::vector<std::list<Edge>>(v_number)) {
+      adj_list(std::vector<std::vector<Edge>>(v_number)) {
 }
 
 void Graph::add_edge(int from, int to, float cost) {
@@ -17,7 +17,7 @@ void Graph::add_edge(int from, int to, float cost) {
     adj_list[from].push_back(std::move(edge));
 }
 
-const std::vector<std::list<Edge>> &Graph::as_adj_list() const noexcept {
+const std::vector<std::vector<Edge>> &Graph::as_adj_list() const noexcept {
     return adj_list;
 }
 

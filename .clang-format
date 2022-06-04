@@ -13,3 +13,6 @@ Standard: Auto
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: true
+# Allow params/args on new line
+BinPackArguments: false
+BinPackParameters: false

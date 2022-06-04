@@ -20,7 +20,7 @@ class Graph {
 
     void add_edge(int from, int to, float cost);
 
-    const std::vector<std::list<Edge>> &as_adj_list() const noexcept;
+    const std::vector<std::vector<Edge>> &as_adj_list() const noexcept;
 
     int get_v_number() const noexcept;
 
@@ -33,7 +33,7 @@ class Graph {
   private:
     int v_number;
     int e_number;
-    std::vector<std::list<Edge>> adj_list;
+    std::vector<std::vector<Edge>> adj_list;
 };
 
 std::istream &operator>>(std::istream &stream, Graph &graph);

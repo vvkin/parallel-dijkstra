@@ -1,43 +1,33 @@
-#include <queue>
 #include <vector>
-#include <limits>
 
+#include "dijkstra/common.hpp"
 #include "dijkstra/serial.hpp"
-#include "dijkstra/const.hpp"
 
-using namespace std;
-
-struct DijkstraCompare {
-    bool operator()(const pair<int, float> &a, const pair<int, float> &b) const {
-        return a.second > b.second;
-    }
-};
-
-vector<float> serial_dijkstra(const Graph &graph, int source) {
+std::vector<float> serial_dijkstra(const Graph &graph, int source) {
     auto v_number = graph.get_v_number();
     auto &adj_list = graph.as_adj_list();
 
-    auto distance = vector<float>(v_number, DIJKSTRA_INF);
-    auto visited = vector<bool>(v_number, false);
+    auto distance = std::vector<float>(v_number, DIJKSTRA_INF);
+    auto visited = std::vector<bool>(v_number, false);
 
-    priority_queue<pair<int, float>, vector<pair<int, float>>, DijkstraCompare> queue;
+    DijkstraQueue queue;
     queue.emplace(source, 0);
     distance[source] = 0;
 
     while (!queue.empty()) {
-        auto [currIdx, currDist] = queue.top();
+        auto [min_idx, min_dist] = queue.top();
         queue.pop();
-        visited[currIdx] = true;
+        visited[min_idx] = true;
 
-        if (distance[currIdx] < currDist) continue;
+        if (distance[min_idx] < min_dist) continue;
 
-        for (auto &edge : adj_list[currIdx]) {
+        for (auto &edge : adj_list[min_idx]) {
             if (visited[edge.to]) continue;
 
-            float nextDist = distance[currIdx] + edge.cost;
-            if (nextDist < distance[edge.to]) {
-                distance[edge.to] = nextDist;
-                queue.emplace(edge.to, nextDist);
+            float next_dist = distance[min_idx] + edge.cost;
+            if (next_dist < distance[edge.to]) {
+                distance[edge.to] = next_dist;
+                queue.emplace(edge.to, next_dist);
             }
         }
     }

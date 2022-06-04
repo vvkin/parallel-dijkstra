@@ -7,7 +7,7 @@
 #include <boost/random/linear_congruential.hpp>
 
 #include "dijkstra/factory.hpp"
-#include "dijkstra/const.hpp"
+#include "dijkstra/common.hpp"
 
 using BoostGraph = boost::adjacency_list<>;
 using ERGen = boost::erdos_renyi_iterator<boost::minstd_rand, BoostGraph>;
