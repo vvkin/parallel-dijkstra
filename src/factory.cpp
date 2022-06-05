@@ -2,6 +2,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/erdos_renyi_generator.hpp>
 #include <boost/random/linear_congruential.hpp>
@@ -13,7 +14,7 @@ using BoostGraph = boost::adjacency_list<>;
 using ERGen = boost::erdos_renyi_iterator<boost::minstd_rand, BoostGraph>;
 
 std::ifstream get_ifstream_throwable(const std::string &path) {
-    std::ifstream in_stream{path};
+    std::ifstream in_stream(path, std::ios::binary);
     if (!in_stream) {
         auto reason = "File " + path + " does not exist";
         throw std::runtime_error(reason);

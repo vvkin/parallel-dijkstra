@@ -30,6 +30,8 @@ class Graph {
 
     void set_e_number(int e_number);
 
+    friend std::istream &operator>>(std::istream &stream, Graph &graph);
+
   private:
     int v_number;
     int e_number;

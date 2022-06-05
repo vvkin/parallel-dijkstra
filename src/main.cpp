@@ -17,12 +17,13 @@ void exec_with_timer(std::function<void(void)> fn, const std::string &label);
 
 int main() {
     std::srand(time(NULL));
-    const int THREADS_NUMBER = 8;
+    const float EPSILON = 1e-6f;
+    const int THREADS_NUMBER = 4;
 
-    // const float GRAPH_DENSITY = 0.3;
-    // const int V_NUMBER = 5000;
+    // const float GRAPH_DENSITY = 0.5;
+    // const int V_NUMBER = 1000;
     // auto graph = GraphFactory::from_random(V_NUMBER, GRAPH_DENSITY);
-    auto graph = GraphFactory::from_file("../../data/graph-10000-0.5.txt");
+    auto graph = GraphFactory::from_file("../../data/binary/graph-5000-0.1.bin");
     auto start = std::rand() % graph.get_v_number();
 
     std::cout << "Vertices = " << graph.get_v_number() << '\n';
@@ -37,18 +38,18 @@ int main() {
                     "PARALLEL");
 
     for (int idx = 0; idx < graph.get_v_number(); ++idx) {
-        if (serial_dist[idx] != parallel_dist[idx]) {
+        if (fabs(serial_dist[idx] - parallel_dist[idx]) > EPSILON) {
             std::cout << "OOPS: " << serial_dist[idx] << ' ' << parallel_dist[idx] << '\n';
-            // return 1;
+            return 1;
         }
     }
 
-    // if (!is_all_reached(distance)) {
+    // if (!is_all_reached(serial_dist) || !is_all_reached(parallel_dist)) {
     //     std::cout << "Graph is not fully connected!" << '\n';
     //     return 1;
     // }
 
-    // auto path = "../../data/graph-5000-0.9.txt";
+    // auto path = "../../data/binary/graph-10000-0.1.bin";
     // GraphWriter::to_file(graph, path);
     return 0;
 }

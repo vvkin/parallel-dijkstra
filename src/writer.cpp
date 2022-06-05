@@ -3,7 +3,7 @@
 #include "dijkstra/writer.hpp"
 
 std::ofstream get_ofstream_throwable(const std::string &path) {
-    std::ofstream out_stream{path};
+    std::ofstream out_stream(path, std::ios::binary);
     if (!out_stream.is_open()) {
         auto reason = "Unable to open file " + path;
         throw new std::runtime_error(reason);

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "dijkstra/graph.hpp"
 
 Graph::Graph() noexcept : v_number(0), e_number(0){};
@@ -40,16 +39,20 @@ void Graph::set_e_number(int e_number) {
 }
 
 std::istream &operator>>(std::istream &stream, Graph &graph) {
-    int v_number, e_number, from, to;
-    float cost;
+    int v_number, e_number;
+    size_t size;
 
-    stream >> v_number >> e_number;
+    stream.read((char *)&v_number, sizeof(v_number));
+    stream.read((char *)&e_number, sizeof(e_number));
+
     graph.set_v_number(v_number);
     graph.set_e_number(e_number);
+    auto &adj_list = graph.adj_list;
 
-    for (int idx = 0; idx < e_number; ++idx) {
-        stream >> from >> to >> cost;
-        graph.add_edge(from, to, cost);
+    for (int v_idx = 0; v_idx < v_number; ++v_idx) {
+        stream.read((char *)&size, sizeof(size));
+        adj_list[v_idx].resize(size);
+        stream.read((char *)&adj_list[v_idx][0], size * sizeof(Edge));
     }
 
     return stream;
@@ -59,13 +62,16 @@ std::ostream &operator<<(std::ostream &stream, const Graph &graph) {
     auto v_number = graph.get_v_number();
     auto e_number = graph.get_e_number();
     auto &adj_list = graph.as_adj_list();
-    stream << v_number << ' ' << e_number << '\n';
+
+    stream.write((char *)&v_number, sizeof(v_number));
+    stream.write((char *)&e_number, sizeof(e_number));
 
     for (int v_idx = 0; v_idx < v_number; ++v_idx) {
-        for (auto &edge : adj_list[v_idx]) {
-            stream << v_idx << ' ' << edge.to << ' ' << edge.cost;
-            stream << '\n';
-        }
+        auto &neighbors = adj_list[v_idx];
+        size_t size = neighbors.size();
+
+        stream.write((char *)&size, sizeof(size));
+        stream.write((char *)&neighbors[0], size * sizeof(Edge));
     }
 
     return stream;
