@@ -10,7 +10,9 @@ const float DIJKSTRA_INF = std::numeric_limits<float>::max();
 using DijkstraQueueEntry = std::pair<int, float>;
 
 struct DijkstraCompare {
-    bool operator()(const DijkstraQueueEntry &a, const DijkstraQueueEntry &b) const;
+    bool operator()(const DijkstraQueueEntry &a, const DijkstraQueueEntry &b) const {
+        return a.second > b.second;
+    }
 };
 
 using DijkstraQueue =

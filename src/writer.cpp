@@ -15,3 +15,10 @@ void GraphWriter::to_file(const Graph &graph, const std::string &path) {
     auto stream = get_ofstream_throwable(path);
     stream << graph;
 }
+
+void GraphWriter::distance_to_file(const std::vector<float> &distance, const std::string &path) {
+    auto stream = get_ofstream_throwable(path);
+    for (auto &el : distance) {
+        stream << el << '\n';
+    }
+}
