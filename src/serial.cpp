@@ -1,11 +1,9 @@
-#include <vector>
-
 #include "dijkstra/common.hpp"
 #include "dijkstra/serial.hpp"
 
 std::vector<float> serial_dijkstra(const Graph &graph, int source) {
     auto v_number = graph.get_v_number();
-    auto &adj_list = graph.as_adj_list();
+    const auto &adj_list = graph.as_adj_list();
 
     auto distance = std::vector<float>(v_number, DIJKSTRA_INF);
     auto visited = std::vector<bool>(v_number, false);
@@ -17,11 +15,13 @@ std::vector<float> serial_dijkstra(const Graph &graph, int source) {
     while (!queue.empty()) {
         auto [min_idx, min_dist] = queue.top();
         queue.pop();
+        if (visited[min_idx]) continue;
+
         visited[min_idx] = true;
+        auto &neighbors = adj_list[min_idx];
 
-        if (distance[min_idx] < min_dist) continue;
-
-        for (auto &edge : adj_list[min_idx]) {
+        for (size_t e_idx = 0; e_idx < neighbors.size(); ++e_idx) {
+            auto &edge = neighbors[e_idx];
             if (visited[edge.to]) continue;
 
             float next_dist = distance[min_idx] + edge.cost;

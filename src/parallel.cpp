@@ -1,5 +1,4 @@
 #include <cmath>
-#include <iostream>
 
 #include "oneapi/tbb/parallel_for.h"
 #include "oneapi/tbb/global_control.h"
@@ -28,7 +27,7 @@ std::vector<float> parallel_dijkstra(const Graph &graph, int source, int threads
 
     int current_idx = source;
     auto queues = std::vector<DijkstraQueue>(threads_number);
-    tbb::global_control global_limit(tbb::global_control::max_allowed_parallelism, threads_number);
+    tbb::global_control t_limit(tbb::global_control::max_allowed_parallelism, threads_number);
 
     while (current_idx != -1) {
         visited[current_idx] = true;
@@ -44,7 +43,6 @@ std::vector<float> parallel_dijkstra(const Graph &graph, int source, int threads
 
         current_idx = pop_min_idx(queues, visited);
     }
-
     return distance;
 }
 
