@@ -1,5 +1,8 @@
 #include <cmath>
-#include <thread>
+#include <iostream>
+
+#include "oneapi/tbb/parallel_for.h"
+#include "oneapi/tbb/global_control.h"
 
 #include "dijkstra/common.hpp"
 #include "dijkstra/parallel.hpp"
@@ -11,7 +14,7 @@ void run_in_thread(int source,
                    std::vector<float> &distance,
                    DijkstraQueue &queue);
 
-DijkstraQueueEntry pop_queues(std::vector<DijkstraQueue> &queues, const std::vector<bool> &visited);
+int pop_min_idx(std::vector<DijkstraQueue> &queues, const std::vector<bool> &visited);
 
 std::pair<int, int> make_bounds(int chunk_size, int chunk_idx, int total_size);
 
@@ -21,11 +24,11 @@ std::vector<float> parallel_dijkstra(const Graph &graph, int source, int threads
 
     auto distance = std::vector<float>(v_number, DIJKSTRA_INF);
     auto visited = std::vector<bool>(v_number, false);
-    auto queues = std::vector<DijkstraQueue>(threads_number);
-
-    std::thread threads[threads_number];
-    int current_idx = source;
     distance[source] = 0;
+
+    int current_idx = source;
+    auto queues = std::vector<DijkstraQueue>(threads_number);
+    tbb::global_control global_limit(tbb::global_control::max_allowed_parallelism, threads_number);
 
     while (current_idx != -1) {
         visited[current_idx] = true;
@@ -33,23 +36,13 @@ std::vector<float> parallel_dijkstra(const Graph &graph, int source, int threads
         auto &neighbors = adj_list[current_idx];
         int chunk_size = std::ceil((float)neighbors.size() / threads_number);
 
-        for (int t_idx = 0; t_idx < threads_number; ++t_idx) {
+        tbb::parallel_for(0, threads_number, [&](int t_idx) {
             auto bounds = make_bounds(chunk_size, t_idx, neighbors.size());
             auto &queue = queues[t_idx];
-            threads[t_idx] = std::thread(run_in_thread,
-                                         current_idx,
-                                         bounds,
-                                         std::ref(neighbors),
-                                         std::ref(visited),
-                                         std::ref(distance),
-                                         std::ref(queue));
-        }
+            run_in_thread(current_idx, bounds, neighbors, visited, distance, queue);
+        });
 
-        for (int t_idx = 0; t_idx < threads_number; ++t_idx)
-            threads[t_idx].join();
-
-        auto [min_idx, min_dist] = pop_queues(queues, visited);
-        current_idx = min_idx;
+        current_idx = pop_min_idx(queues, visited);
     }
 
     return distance;
@@ -76,8 +69,7 @@ void run_in_thread(int source,
     }
 }
 
-DijkstraQueueEntry pop_queues(std::vector<DijkstraQueue> &queues,
-                              const std::vector<bool> &visited) {
+int pop_min_idx(std::vector<DijkstraQueue> &queues, const std::vector<bool> &visited) {
     while (true) {
         int global_min_idx, global_q_idx;
         float global_min_dist = DIJKSTRA_INF;
@@ -97,10 +89,10 @@ DijkstraQueueEntry pop_queues(std::vector<DijkstraQueue> &queues,
         if (global_min_dist == DIJKSTRA_INF) break; // queues are empty
 
         queues[global_q_idx].pop();
-        if (!visited[global_min_idx]) return {global_min_idx, global_min_dist}; // global min found
+        if (!visited[global_min_idx]) return global_min_idx; // global min found
     }
 
-    return {-1, -1};
+    return -1; // queues are empty
 }
 
 std::pair<int, int> make_bounds(int chunk_size, int chunk_idx, int total_size) {

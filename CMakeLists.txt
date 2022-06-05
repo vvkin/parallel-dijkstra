@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -ltbb")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 
 # add executable
@@ -37,7 +37,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INCLUDES})
 
 # external packages
 find_package(Boost 1.78 REQUIRED COMPONENTS graph)
+find_package(TBB REQUIRED COMPONENTS tbb)
 
 # link external libraries
 set(Boost::graph)
+set(TBB::tbb)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LIBRARIES})
