@@ -1,6 +1,4 @@
 #include <iostream>
-#include <random>
-#include <fstream>
 #include <string>
 #include <chrono>
 #include <functional>
@@ -12,12 +10,12 @@
 #include "dijkstra/serial.hpp"
 #include "dijkstra/parallel.hpp"
 
-void exec_with_timer(std::function<void(void)> executor, const std::string &label) {
+void exec_with_timer(std::function<void(void)> executor) {
     auto start = std::chrono::high_resolution_clock::now();
     executor();
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double, std::milli> ms_double = end - start;
-    std::cout << label << ": " << ms_double.count() << "ms\n";
+    std::cout << ms_double.count() << "ms\n";
 }
 
 void run_dijkstra(const po::variables_map &params) {
@@ -36,10 +34,9 @@ void run_dijkstra(const po::variables_map &params) {
     auto source = params["source"].as<unsigned>();
     if (params["parallel"].as<bool>()) {
         auto threads_number = params["threads-number"].as<unsigned>();
-        exec_with_timer([&]() { distance = parallel_dijkstra(graph, source, threads_number); },
-                        "Parallel");
+        exec_with_timer([&]() { distance = parallel_dijkstra(graph, source, threads_number); });
     } else {
-        exec_with_timer([&]() { distance = serial_dijkstra(graph, source); }, "Serial");
+        exec_with_timer([&]() { distance = serial_dijkstra(graph, source); });
     }
 
     if (params.count("output-path")) {
@@ -58,5 +55,3 @@ int main(int argc, char *argv[]) {
     run_dijkstra(params);
     return 0;
 }
-
-// g++ - O3 src/*.cpp -I include/ -o main
