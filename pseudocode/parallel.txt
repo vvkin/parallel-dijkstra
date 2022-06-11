@@ -1,0 +1,31 @@
+function parallel_dijkstra(graph, s, P):
+  foreach v in graph:
+    distance(v) = ∞
+    visited(v) = false
+  
+  local_queues = init P priority queues
+  distance(s) = 0
+  u = s
+
+  while local queues are not empty:
+    visited[u] = true
+    N = graph(u) # adjancent vertices for u
+
+    for p in 0 to P:
+      start = p * |N| / P
+      end = min(start + |N| / P, |N|)
+
+      in thread(
+        for w in start to end:
+          if (visited(w)) continue
+          next_dist = distance(u) + graph(u, w)
+
+          if (next_dist < distance(w)):
+            distance(w) = next_dist
+            local_queues(p).add(w) # add to local queue
+      )
+
+    wait for (P threads)
+    u = local_queues.pop_first_unvisited()
+
+  return distance       

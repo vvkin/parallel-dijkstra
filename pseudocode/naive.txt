@@ -1,0 +1,19 @@
+function naive_dijkstra(graph, source):
+  for each v in graph:
+    distance(v) = ∞
+    visited(v) = false
+
+  distance(source) = 0 # source is already reached
+
+  while there is unvisited vertex:
+    u = closest vertex from unvisited # on the first iteration u = source
+    visited(u) = true
+
+    for w in adj_list(u):
+      if (visited(w)) continue // skip this vertex
+      next_dist = distance(u) + e(u, w)
+
+      if (next_dist < distance(w)):
+        distance(w) = next_dist # improve distance
+
+  return distance 

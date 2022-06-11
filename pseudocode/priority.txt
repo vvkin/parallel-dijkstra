@@ -1,0 +1,23 @@
+function priority_dijkstra(graph, s):
+  foreach v in graph:
+    distance(v) = ∞
+    visited(v) = false
+  
+  distance(s) = 0
+  queue.add(s, 0) # (vertex, distance) pairs
+
+  while (queue is not empty):
+    u, cost = queue.pop() # get closest vertex
+
+    if (visited[u]) continue # cannot improve distance to visited
+    visited[u] = true
+
+    foreach w in graph(u): # iterate over adjacent vertices
+      if (visited[w]) continue
+      next_dist = distance(u) + graph(u, w)
+
+      if (next_dist < distance(w)):
+        distance(w) = next_dist
+        queue.add(w, next_dist)
+
+  return distance       
