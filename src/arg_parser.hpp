@@ -17,7 +17,7 @@ po::variables_map parse_args(int argc, char *argv[]) {
         graph.add_options()
             ("input-path,i", po::value<std::string>(), "path to file with input graph")
             ("output-path,o", po::value<std::string>(), "path to file to store used graph")
-            ("generate,g", po::bool_switch(), "whether to use serial or parallel algorithm")
+            ("generate,g", po::bool_switch(), "whether to generate a random graph. If given, also pass --v-number and --density")
             ("v-number,v", po::value<unsigned>(), "number of vertices to generate")
             ("density,d", po::value<float>(), "probability of edge existence")
         ;
